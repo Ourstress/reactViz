@@ -39,14 +39,15 @@ class App extends Component {
     });
     return (
       <div className="App">
+        <h2>HDB Resale Price Index 1990-present</h2>
         <XYPlot height={500} width={500} xType="ordinal">
           <MarkSeries data={HDBrpi} onValueMouseOver={this._rememberValue} onValueMouseOut={this._forgetValue}/>
-          <XAxis tickValues={(HDBrpi.length > 15) ? HDBrpi.filter((item, idx) => {
+          <XAxis title="Quarterty Data" tickValues={(HDBrpi.length > 15) ? HDBrpi.filter((item, idx) => {
                   if ((idx % Math.floor(HDBrpi.length / 7)) === 0) {
                     return item.x}
                 }).map(item => (item.x))
               : HDBrpi.map(item => (item.x))}/>
-          <YAxis />
+          <YAxis title="Price Index" />
           {value ? <Hint value={value} /> : null}
         </XYPlot>
       </div>
