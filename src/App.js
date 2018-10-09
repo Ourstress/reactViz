@@ -40,6 +40,7 @@ class App extends Component {
     return (
       <div className="App">
         <h2>HDB Resale Price Index 1990-present</h2>
+        <div className="svg-container">
         <XYPlot height={400} width={350} xType="ordinal">
           <MarkSeries data={HDBrpi} onValueMouseOver={this._rememberValue} onValueMouseOut={this._forgetValue}/>
           <XAxis title="Quarterty Data" tickValues={(HDBrpi.length > 15) ? HDBrpi.filter((item, idx) => {
@@ -49,6 +50,7 @@ class App extends Component {
           <YAxis title="Price Index" />
           {value ? <Hint value={value} /> : null}
         </XYPlot>
+        </div>
       </div>
     );
   }
