@@ -40,7 +40,7 @@ class App extends Component {
     return (
       <div className="App">
         <h2>HDB Resale Price Index 1990-present</h2>
-        <XYPlot height={500} width={500} xType="ordinal">
+        <XYPlot height={400} width={350} xType="ordinal">
           <MarkSeries data={HDBrpi} onValueMouseOver={this._rememberValue} onValueMouseOut={this._forgetValue}/>
           <XAxis title="Quarterty Data" tickValues={(HDBrpi.length > 15) ? HDBrpi.filter((item, idx) => {
                   return ((idx % Math.floor(HDBrpi.length / 7)) === 0)? item.x :""
