@@ -43,8 +43,7 @@ class App extends Component {
         <XYPlot height={500} width={500} xType="ordinal">
           <MarkSeries data={HDBrpi} onValueMouseOver={this._rememberValue} onValueMouseOut={this._forgetValue}/>
           <XAxis title="Quarterty Data" tickValues={(HDBrpi.length > 15) ? HDBrpi.filter((item, idx) => {
-                  if ((idx % Math.floor(HDBrpi.length / 7)) === 0) {
-                    return item.x}
+                  return ((idx % Math.floor(HDBrpi.length / 7)) === 0)? item.x :""
                 }).map(item => (item.x))
               : HDBrpi.map(item => (item.x))}/>
           <YAxis title="Price Index" />
