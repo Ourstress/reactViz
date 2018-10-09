@@ -17,4 +17,5 @@ code {
 
 .rv-xy-plot__inner{
   margin: auto;
+  pointer-events: all;
 }
