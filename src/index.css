@@ -16,4 +16,5 @@ code {
 }
 svg{
   touch-action: auto;
+  pointer-events: none;
 }
