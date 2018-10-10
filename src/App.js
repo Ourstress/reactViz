@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import '../node_modules/react-vis/dist/style.css';
-import {XYPlot, LineSeries, XAxis, YAxis, Hint, LineMarkSeries} from 'react-vis';
+import {XYPlot, LineSeries, XAxis, YAxis, Hint} from 'react-vis';
 import resalePriceIndexHDB from './DataApi/resalePriceIndexHDB'
 import privateResidentialPriceIndexURA from './DataApi/privateResidentialPriceIndexURA'
 
@@ -46,7 +46,7 @@ class App extends Component {
     });
     return (
       <div className="App">
-        <h2>HDB Resale Price Index</h2>
+        <h2>Property Price Indices</h2>
         <h4>Base 100% - 2009-Q1</h4>
         <XYPlot height={400} width={350} xType="ordinal">
           <LineSeries data={PRPindex} onNearestXY={this._rememberValue} />        
