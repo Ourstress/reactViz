@@ -13,12 +13,14 @@ class App extends Component {
       PrivateResidentialPriceIndexURA: [],
       value: null,
       PRPI: true,
-      HRPI: true
+      HRPI: true,
+      markedSeries: false
   }
   this._rememberValue = this._rememberValue.bind(this)
   this._forgetValue = this._forgetValue.bind(this)
   this.toggleHRPI = this.toggleHRPI.bind(this)
   this.togglePRPI = this.togglePRPI.bind(this)
+  this.toggleMarkSeries = this.toggleMarkSeries.bind(this)
 }
 
   async componentDidMount(){
@@ -49,6 +51,11 @@ class App extends Component {
       PRPI: !this.state.PRPI
       })
   }
+  toggleMarkSeries() {
+    this.setState({
+      markedSeries: !this.state.markedSeries
+      })
+  }
   render() {
     const {value} = this.state
     const HDBrpi = this.state.ResalePriceIndexHDB.map((item)=> {
@@ -61,26 +68,31 @@ class App extends Component {
       <div className="App">
         <h2>Property Price Indices</h2>
         <h4>Base 100% - 2009-Q1</h4>
+        <table>
+          <tbody>
+           <tr>
+             <td><input type="checkbox" checked={this.state.PRPI} onChange={this.togglePRPI}/>Private Residential Property Price Index</td>
+            </tr>
+            <tr>
+            <td><input type="checkbox" checked={this.state.HRPI} onChange={this.toggleHRPI}/>HDB Resale Price Index</td>  
+            </tr>
+            <tr>
+            <td><input type="checkbox" checked={this.state.markedSeries} onChange={this.toggleMarkSeries}/>Show Data Points</td>  
+            </tr>
+          </tbody>
+        </table>
         <XYPlot height={400} width={350} xType="ordinal">
-          <LineSeries data={PRPindex} onNearestXY={this._rememberValue} />        
-          <LineSeries data={HDBrpi} onNearestXY={this._rememberValue} />        
-          <XAxis title="Quarterty Data" tickValues={(PRPindex.length > 15) ? PRPindex.filter((item, idx) => {
+          {this.state.PRPI===true && this.state.markedSeries===false && <LineSeries data={PRPindex} onNearestXY={this._rememberValue} />}        
+          {this.state.HRPI===true && this.state.markedSeries===false && <LineSeries data={HDBrpi} onNearestXY={this._rememberValue} />}        
+          {this.state.PRPI===true && this.state.markedSeries===true && <LineMarkSeries data={PRPindex} onValueMouseOver={this._rememberValue} onValueMouseOut={this._forgetValue}/>}        
+          {this.state.HRPI===true && this.state.markedSeries===true && <LineMarkSeries data={HDBrpi} onValueMouseOver={this._rememberValue} onValueMouseOut={this._forgetValue}/>}        
+          <XAxis title="Data by Quarter" tickValues={(PRPindex.length > 15) ? PRPindex.filter((item, idx) => {
                   return ((idx % Math.floor(PRPindex.length / 5)) === 0)? item.x :""
                 }).map(item => (item.x))
               : HDBrpi.map(item => (item.x))}/>
           <YAxis title="Price Index" />
           {value ? <Hint value={value} /> : null}
         </XYPlot>
-        <table>
-          <tbody>
-           <tr>
-             <td><input type="checkbox" checked={this.state.PRPI} onChange={this.togglePRPI}/>Private Residential Price Index</td>
-            </tr>
-            <tr>
-            <td><input type="checkbox" checked={this.state.HRPI} onChange={this.toggleHRPI}/>HDB Resale Price Index</td>
-            </tr>
-          </tbody>
-        </table>
       </div>
     );
   }
