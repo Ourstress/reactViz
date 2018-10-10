@@ -18,3 +18,7 @@ svg{
   touch-action: auto;
   pointer-events: none;
 }
+td{
+  padding-left: 2.5rem;
+  text-align: left;
+}

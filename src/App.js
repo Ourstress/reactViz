@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import '../node_modules/react-vis/dist/style.css';
-import {XYPlot, LineSeries, XAxis, YAxis, Hint} from 'react-vis';
+import {XYPlot, LineSeries, XAxis, YAxis, Hint, LineMarkSeries} from 'react-vis';
 import resalePriceIndexHDB from './DataApi/resalePriceIndexHDB'
 import privateResidentialPriceIndexURA from './DataApi/privateResidentialPriceIndexURA'
 
@@ -11,10 +11,14 @@ class App extends Component {
     this.state = {
       ResalePriceIndexHDB: [],
       PrivateResidentialPriceIndexURA: [],
-      value: null
+      value: null,
+      PRPI: true,
+      HRPI: true
   }
   this._rememberValue = this._rememberValue.bind(this)
   this._forgetValue = this._forgetValue.bind(this)
+  this.toggleHRPI = this.toggleHRPI.bind(this)
+  this.togglePRPI = this.togglePRPI.bind(this)
 }
 
   async componentDidMount(){
@@ -35,7 +39,16 @@ class App extends Component {
   _rememberValue(value) {
     this.setState({value});
   }
-
+  toggleHRPI() {
+    this.setState({
+      HRPI: !this.state.HRPI
+      })
+  }
+  togglePRPI() {
+    this.setState({
+      PRPI: !this.state.PRPI
+      })
+  }
   render() {
     const {value} = this.state
     const HDBrpi = this.state.ResalePriceIndexHDB.map((item)=> {
@@ -58,6 +71,16 @@ class App extends Component {
           <YAxis title="Price Index" />
           {value ? <Hint value={value} /> : null}
         </XYPlot>
+        <table>
+          <tbody>
+           <tr>
+             <td><input type="checkbox" checked={this.state.PRPI} onChange={this.togglePRPI}/>Private Residential Price Index</td>
+            </tr>
+            <tr>
+            <td><input type="checkbox" checked={this.state.HRPI} onChange={this.toggleHRPI}/>HDB Resale Price Index</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     );
   }
