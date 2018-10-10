@@ -4,6 +4,7 @@ import '../node_modules/react-vis/dist/style.css';
 import {XYPlot, LineSeries, XAxis, YAxis, Hint, LineMarkSeries} from 'react-vis';
 import resalePriceIndexHDB from './DataApi/resalePriceIndexHDB'
 import privateResidentialPriceIndexURA from './DataApi/privateResidentialPriceIndexURA'
+import sibor from './DataApi/consumerPriceIndex'
 
 class App extends Component {
   constructor(props) {
@@ -11,6 +12,7 @@ class App extends Component {
     this.state = {
       ResalePriceIndexHDB: [],
       PrivateResidentialPriceIndexURA: [],
+      sibor: [],
       value: null,
       PRPI: true,
       HRPI: true,
@@ -29,6 +31,8 @@ class App extends Component {
       this.setState({ResalePriceIndexHDB:HDBrpiItems})
       const PRPindexItems = await privateResidentialPriceIndexURA()
       this.setState({PrivateResidentialPriceIndexURA:PRPindexItems})
+      const Siboritems = await sibor()
+      this.setState({sibor: Siboritems})
     } catch (error) {throw error}
   }
 
@@ -64,6 +68,12 @@ class App extends Component {
     const PRPindex = this.state.PrivateResidentialPriceIndexURA.map((item)=> {
       return {x: item.quarter, y: parseFloat(item.value)}
     });
+    const SIBORindex = this.state.sibor.filter((item)=>{
+      return item.end_of_month.endsWith("1") || item.end_of_month.endsWith("4") || item.end_of_month.endsWith("7") || item.end_of_month.endsWith("10")
+    })
+    .map((item)=> {
+      return {x: `${item.end_of_month.slice(0,4)}-${item.end_of_month.endsWith("1")?"Q1":item.end_of_month.endsWith("4")?"Q2":item.end_of_month.endsWith("7")?"Q3":"Q4"}`, y:item.sgs_repo_overnight_rate}
+    });
     return (
       <div className="App">
         <h2>Property Price Indices</h2>
@@ -86,6 +96,7 @@ class App extends Component {
           {this.state.HRPI===true && this.state.markedSeries===false && <LineSeries data={HDBrpi} onNearestXY={this._rememberValue} />}        
           {this.state.PRPI===true && this.state.markedSeries===true && <LineMarkSeries data={PRPindex} onValueMouseOver={this._rememberValue} onValueMouseOut={this._forgetValue}/>}        
           {this.state.HRPI===true && this.state.markedSeries===true && <LineMarkSeries data={HDBrpi} onValueMouseOver={this._rememberValue} onValueMouseOut={this._forgetValue}/>}        
+          <LineMarkSeries data={SIBORindex}/>        
           <XAxis title="Data by Quarter" tickValues={(PRPindex.length > 15) ? PRPindex.filter((item, idx) => {
                   return ((idx % Math.floor(PRPindex.length / 5)) === 0)? item.x :""
                 }).map(item => (item.x))
