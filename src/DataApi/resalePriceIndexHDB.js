@@ -3,5 +3,7 @@ export default async function resalePriceIndexHDB() {
       "https://data.gov.sg/api/action/datastore_search?limit=300&resource_id=52e93430-01b7-4de0-80df-bc83d0afed40"
     );
     const data = await response.json();
-    return data.result.records;
+    return data.result.records.map((item)=> {
+      return {x: item.quarter, y: parseFloat(item.index)}
+    });
   }
