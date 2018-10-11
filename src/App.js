@@ -60,7 +60,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <h2>Property Price Indices</h2>
+        <h2>Property Market Indices</h2>
         <h4>Base 100% - 2009-Q1</h4>
         <SimpleMenu />
         {/* <table>

@@ -19,9 +19,10 @@ const styles = theme => ({
 
 class CheckboxesGroup extends React.Component {
   state = {
-    gilad: true,
-    jason: false,
-    antoine: false,
+    PRPI: true,
+    HRPI: true,
+    Sibor1mth: false,
+    markedSeries: false
   };
 
   handleChange = name => event => {
@@ -30,66 +31,39 @@ class CheckboxesGroup extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { gilad, jason, antoine } = this.state;
-    const error = Object.values(this.state).filter(v => v).length !== 2;
+    const { PRPI, HRPI, Sibor1mth } = this.state;
 
     return (
       <div className={classes.root}>
         <FormControl component="fieldset" className={classes.formControl}>
-          <FormLabel component="legend">Assign responsibility</FormLabel>
+          <FormLabel component="legend">Property Indices</FormLabel>
           <FormGroup>
             <FormControlLabel
               control={
-                <Checkbox checked={gilad} onChange={this.handleChange('gilad')} value="gilad" />
+                <Checkbox checked={PRPI} onChange={this.handleChange('PRPI')} value="PRPI" />
               }
-              label="Gilad Gray"
+              label="Private Residential Property Price Index"
             />
             <FormControlLabel
               control={
-                <Checkbox checked={jason} onChange={this.handleChange('jason')} value="jason" />
+                <Checkbox checked={HRPI} onChange={this.handleChange('HRPI')} value="HRPI" />
               }
-              label="Jason Killian"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={antoine}
-                  onChange={this.handleChange('antoine')}
-                  value="antoine"
-                />
-              }
-              label="Antoine Llorca"
+              label="HDB Resale Price Index"
             />
           </FormGroup>
-          <FormHelperText>Be careful</FormHelperText>
+          <FormHelperText>Toggle display on/off</FormHelperText>
         </FormControl>
-        <FormControl required error={error} component="fieldset" className={classes.formControl}>
-          <FormLabel component="legend">Pick two</FormLabel>
+        <FormControl component="fieldset" className={classes.formControl}>
+          <FormLabel component="legend">Other Controls</FormLabel>
           <FormGroup>
             <FormControlLabel
               control={
-                <Checkbox checked={gilad} onChange={this.handleChange('gilad')} value="gilad" />
+                <Checkbox checked={Sibor1mth} onChange={this.handleChange('Sibor1mth')} value="Sibor1mth" />
               }
-              label="Gilad Gray"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox checked={jason} onChange={this.handleChange('jason')} value="jason" />
-              }
-              label="Jason Killian"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={antoine}
-                  onChange={this.handleChange('antoine')}
-                  value="antoine"
-                />
-              }
-              label="Antoine Llorca"
+              label="SIBOR rate"
             />
           </FormGroup>
-          <FormHelperText>You can display an error</FormHelperText>
+          <FormHelperText>Click here for more details</FormHelperText>
         </FormControl>
       </div>
     );
