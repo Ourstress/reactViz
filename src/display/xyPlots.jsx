@@ -13,8 +13,19 @@ class XyPlots extends Component {
             PRPindex: [],
             sibor: [],
             CPIitems: [],
-            value: null        }    
+            value: null        
+        }
+        this._rememberValue = this._rememberValue.bind(this)
+        this._forgetValue = this._forgetValue.bind(this)    
     }
+    _forgetValue() {
+        this.setState({
+          value: null
+        });
+      }
+      _rememberValue(value) {
+        this.setState({value});
+      }
     
     async componentDidMount(){
         try{
@@ -31,13 +42,16 @@ class XyPlots extends Component {
 
     render() {
         const {value,CPIitems,PRPindex,HDBindex,sibor} = this.state
+        const {PRPI,HRPI,Sibor1mth,markedSeries} = this.props
         return (
             <div>
                 <XYPlot height={400} width={350} xType="ordinal">
-                    <LineSeries data={CPIitems} />
-                    <LineSeries data={PRPindex} />
-                    <LineSeries data={HDBindex} />
-                    <LineSeries data={sibor} />
+                    {PRPI===true && markedSeries===false && <LineSeries data={PRPindex} />}        
+                    {HRPI===true && markedSeries===false && <LineSeries data={HDBindex}/>}        
+                    {Sibor1mth===true && markedSeries===false && <LineSeries data={sibor}/>}        
+                    {PRPI===true && markedSeries===true && <LineMarkSeries data={PRPindex} onValueMouseOver={this._rememberValue} onValueMouseOut={this._forgetValue}/>}        
+                    {HRPI===true && markedSeries===true && <LineMarkSeries data={HDBindex} onValueMouseOver={this._rememberValue} onValueMouseOut={this._forgetValue}/>}        
+                    {Sibor1mth===true && markedSeries===true && <LineMarkSeries data={sibor} onValueMouseOver={this._rememberValue} onValueMouseOut={this._forgetValue}/>} 
                     <XAxis title="Data by Quarter" tickValues={(PRPindex.length > 15) ? PRPindex.filter((item, idx) => {
                         return ((idx % Math.floor(PRPindex.length / 5)) === 0)? item.x :""
                         }).map(item => (item.x))

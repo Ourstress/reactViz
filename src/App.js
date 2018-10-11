@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import '../node_modules/react-vis/dist/style.css';
-import XyPlots from './display/xyPlots'
-import SimpleMenu from './display/menu'
+import Chart from './display/Chart'
 
 class App extends Component {
   constructor(props) {
@@ -62,7 +61,6 @@ class App extends Component {
       <div className="App">
         <h2>Property Market Indices</h2>
         <h4>Base 100% - 2009-Q1</h4>
-        <SimpleMenu />
         {/* <table>
           <tbody>
            <tr>
@@ -82,7 +80,7 @@ class App extends Component {
             </tr>
           </tbody>
         </table> */}
-        <XyPlots/>
+        <Chart/>
       </div>
     );
   }

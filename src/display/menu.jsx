@@ -2,7 +2,7 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import CheckboxesGroup from './formGroup'
+import Checkbox from '@material-ui/core/Checkbox';
 
 class SimpleMenu extends React.Component {
   state = {
@@ -35,7 +35,10 @@ class SimpleMenu extends React.Component {
           open={Boolean(anchorEl)}
           onClose={this.handleClose}
         >
-          <CheckboxesGroup />
+          <MenuItem>Private Residential Property Price Index<Checkbox checked onChange={this.props.togglePRPI}/></MenuItem>
+          <MenuItem>HDB Resale Price Index <Checkbox checked onChange={this.props.toggleHRPI}/></MenuItem>
+          <MenuItem>SIBOR rate <Checkbox onChange={this.props.toggleSibor1mth}/></MenuItem>
+          <MenuItem>Show data <Checkbox onChange={this.props.toggleMarkSeries}/></MenuItem>
         </Menu>
       </div>
     );
