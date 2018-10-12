@@ -7,8 +7,28 @@ import Checkbox from '@material-ui/core/Checkbox';
 class SimpleMenu extends React.Component {
   state = {
     anchorEl: null,
+    PRPI: true,
+    HRPI: true,
+    Sibor1mth: false,
+    markedSeries: false    
   };
-
+  handlePRPI = () => {
+    this.setState({PRPI: !this.state.PRPI})
+    this.props.togglePRPI()
+  }
+  handleHRPI = () => {
+    this.setState({HRPI: !this.state.HRPI})
+    this.props.toggleHRPI()
+  } 
+  handleSibor1mth = () => {
+    this.setState({Sibor1mth: !this.state.Sibor1mth})
+    this.props.toggleSibor1mth()
+  } 
+  handleMarkedSeries = () => {
+    this.setState({markedSeries: !this.state.markedSeries})
+    this.props.toggleMarkSeries()
+  } 
+  
   handleClick = event => {
     this.setState({ anchorEl: event.currentTarget });
   };
@@ -18,7 +38,7 @@ class SimpleMenu extends React.Component {
   };
 
   render() {
-    const { anchorEl } = this.state;
+    const {anchorEl,PRPI, HRPI,Sibor1mth,markedSeries} = this.state;
 
     return (
       <div>
@@ -35,10 +55,10 @@ class SimpleMenu extends React.Component {
           open={Boolean(anchorEl)}
           onClose={this.handleClose}
         >
-          <MenuItem>Private Residential Property Price Index<Checkbox checked onChange={this.props.togglePRPI}/></MenuItem>
-          <MenuItem>HDB Resale Price Index <Checkbox checked onChange={this.props.toggleHRPI}/></MenuItem>
-          <MenuItem>SIBOR rate <Checkbox onChange={this.props.toggleSibor1mth}/></MenuItem>
-          <MenuItem>Show data <Checkbox onChange={this.props.toggleMarkSeries}/></MenuItem>
+          <MenuItem>Private Residential Property Price Index<Checkbox checked={PRPI} onChange={this.handlePRPI}/></MenuItem>
+          <MenuItem>HDB Resale Price Index <Checkbox checked={HRPI} onChange={this.handleHRPI}/></MenuItem>
+          <MenuItem>SIBOR rate <Checkbox checked={Sibor1mth} onChange={this.handleSibor1mth}/></MenuItem>
+          <MenuItem>Show data <Checkbox checked={markedSeries} onChange={this.handleMarkedSeries}/></MenuItem>
         </Menu>
       </div>
     );
