@@ -2,7 +2,7 @@ const axios = require('axios');
 
 export default async function CPI() {  
     const response = await axios(
-      "http://www.tablebuilder.singstat.gov.sg/publicfacing/rest/timeseries/tabledata/15092?variables=M212191.1&offset=168"
+      "https://thingproxy.freeboard.io/fetch/http://www.tablebuilder.singstat.gov.sg/publicfacing/rest/timeseries/tabledata/15092?variables=M212191.1&offset=168"
     );
    return response.data.records.filter((item)=>{
     return item.time.endsWith("Jan") || item.time.endsWith("Apr") || item.time.endsWith("Jul") || item.time.endsWith("Oct")

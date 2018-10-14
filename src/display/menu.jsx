@@ -55,10 +55,10 @@ class SimpleMenu extends React.Component {
           open={Boolean(anchorEl)}
           onClose={this.handleClose}
         >
-          <MenuItem>Private Residential Property Price Index<Checkbox checked={PRPI} onChange={this.handlePRPI}/></MenuItem>
-          <MenuItem>HDB Resale Price Index <Checkbox checked={HRPI} onChange={this.handleHRPI}/></MenuItem>
-          <MenuItem>SIBOR rate <Checkbox checked={Sibor1mth} onChange={this.handleSibor1mth}/></MenuItem>
-          <MenuItem>Show data <Checkbox checked={markedSeries} onChange={this.handleMarkedSeries}/></MenuItem>
+          <MenuItem>Private Residential Property Price Index<Checkbox data-usage="checkbox" checked={PRPI} onChange={this.handlePRPI}/></MenuItem>
+          <MenuItem>HDB Resale Price Index <Checkbox data-usage="checkbox" checked={HRPI} onChange={this.handleHRPI}/></MenuItem>
+          <MenuItem>SIBOR rate <Checkbox data-usage="checkbox" checked={Sibor1mth} onChange={this.handleSibor1mth}/></MenuItem>
+          <MenuItem>Show data <Checkbox data-usage="checkbox" checked={markedSeries} onChange={this.handleMarkedSeries}/></MenuItem>
         </Menu>
       </div>
     );
